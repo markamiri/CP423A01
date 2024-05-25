@@ -3,7 +3,7 @@ import os
 import glob
 import nltk
 from collections import defaultdict
-from luxx6090_a01 import lowerize, remove_single, remove_special, remove_stop_words, tokenize, create_set
+from luxx6090_a01 import lowerize, remove_single, remove_special, remove_stop_words, tokenize, create_set, preprocess_text
 import re
 directory = r'C:\Users\Mark\Desktop\CP423 Text Retrival and Search engine\A01\data'
 
@@ -16,12 +16,7 @@ doc_id_name = {}
 file_counter = 1
 
 for file_name in files[:2]:
-    lowerize(file_name)
-    tokenize(file_name)
-    remove_stop_words(file_name)
-    remove_special(file_name)
-    remove_single(file_name)
-    word_set = create_set(file_name)
+    word_set =preprocess_text(file_name)
 
     for word in word_set:
         word = str(word)

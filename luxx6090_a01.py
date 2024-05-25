@@ -32,9 +32,10 @@ def tokenize(input_file_path):
         print("sentences", sentences)
 
 #Remove all stop words
-stop_words = set(stopwords.words('english'))
 
 def remove_stop_words(input_file_path):
+    stop_words = set(stopwords.words('english'))
+
     with open(input_file_path, 'r', encoding = 'utf-8') as file:
         content = file.read()
         words = word_tokenize(content)
@@ -69,12 +70,55 @@ def create_set(input_file_path):
         content = set(words)
         return content
 
-for i in files[:1]:
-    lowerize(i)
-    tokenize(i)
-    remove_stop_words(i)
-    remove_special(i)
-    remove_single(i)
-    create_set(i)
+
     
             
+def ppreprocess_text(input_file_path):
+    stop_words = set(stopwords.words('english'))
+    with open(input_file_path, 'r', encoding='utf-8') as file:
+        
+        content= file.read()
+        words = word_tokenize(content)
+        filtered = [word for word in words if word.lower() not in stop_words]
+        pattern = r'[^a-zA-Z0-9\s]'
+        processed_text = re.sub(pattern, ' ', filtered)
+        remove_single_content = ' '.join([word for word in preprocess_text.split() if len(word)>1])
+        content = word_tokenize(remove_single_content)
+        content = set(content)
+        return content 
+ 
+
+def preprocess_text(input_file_path):
+    stop_words = set(stopwords.words('english'))
+    with open(input_file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+        
+    # Tokenize the content
+    words = word_tokenize(content)
+    
+    # Filter out stop words
+    filtered = [word for word in words if word.lower() not in stop_words]
+    
+    # Join the filtered words into a single string
+    filtered_text = ' '.join(filtered)
+    
+    # Remove special characters
+    pattern = r'[^a-zA-Z0-9\s]'
+    processed_text = re.sub(pattern, ' ', filtered_text)
+    
+    # Remove single characters
+    remove_single_content = ' '.join([word for word in processed_text.split() if len(word) > 1])
+    
+    # Tokenize the processed text and convert to a set
+    content = word_tokenize(remove_single_content)
+    content = set(content)
+    
+    return content
+
+for i in files[:1]:
+    print(preprocess_text(i))
+
+
+
+
+
